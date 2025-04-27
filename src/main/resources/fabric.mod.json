@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "mcsrfairplay-public",
+	"version": "${version}",
+	"name": "MCSR Fairplay Public",
+	"description": "The public component of the MCSR Fairplay mod. Provides verification and anti-cheat functionality for MCSR.",
+	"authors": [
+		{
+			"name": "ExeRSolver",
+			"contact": {
+				"homepage": "https://github.com/ExeRSolver"
+			}
+		}
+	],
+	"license": "MIT",
+	"icon": "assets/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"exersolver.mcsrfairplaypublic.MCSRFairplay"
+		]
+	},
+	"mixins": [
+		"mcsrfairplaypublic.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": ">=1.16 <=1.16.1",
+		"java": ">=8"
+	}
+}

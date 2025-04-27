@@ -1,0 +1,66 @@
+plugins {
+	id 'fabric-loom' version '1.10-SNAPSHOT'
+	id 'com.gradleup.shadow' version '8.3.5'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// https://mvnrepository.com/artifact/com.github.kwhat/jnativehook
+	shadow(implementation group: 'com.github.kwhat', name: 'jnativehook', version: '2.2.2')
+
+	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+	shadow(implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.80')
+
+	// https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform
+	shadow(implementation group: 'net.java.dev.jna', name: 'jna-platform', version: '5.17.0')
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 8
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks {
+	shadowJar {
+		configurations = [project.configurations.shadow]
+		outputs.upToDateWhen { false }
+		exclude('META-INF/**')
+		exclude('org/bouncycastle/pqc/crypto/picnic/**')
+		minimize()
+		from("LICENSE") {
+			rename { "${it}_${project.base.archivesName.get()}"}
+		}
+	}
+	remapJar {
+		dependsOn(shadowJar)
+		inputFile = file(shadowJar.archivePath)
+	}
+}
