@@ -5,6 +5,7 @@ import org.bouncycastle.jcajce.provider.digest.Blake3;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.util.function.BiConsumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -14,6 +15,8 @@ public class CryptoZipWriter extends OutputStreamWriter {
     private final String hashFileName;
     private String hashHex = null;
     private boolean closed = false;
+
+    public static BiConsumer<String, String> onHash;
 
     public CryptoZipWriter(@NotNull ZipOutputStream outputStream, String logFileName, String hashFileName) throws IOException {
         super(outputStream);
@@ -42,6 +45,8 @@ public class CryptoZipWriter extends OutputStreamWriter {
         this.write(this.hashHex);
         super.close();
         this.closed = true;
+        if (onHash != null)
+            onHash.accept(this.getHashFileName(), this.hashHex);
     }
 
     public String getHashFileName() {
