@@ -20,7 +20,7 @@ public class OutputUtils {
 
     public static void setFileWriter(String worldName) {
         try {
-            File logFile = FabricLoader.getInstance().getGameDir().resolve("saves").resolve(worldName).resolve("mcsrfairplay").resolve("input logs").toFile();
+            File logFile = FabricLoader.getInstance().getGameDir().resolve("saves").resolve(worldName).resolve("mcsrfairplay").resolve("input-logs").toFile();
             logFile.mkdirs();
 
             int logNum = getLogCount(logFile) + 1;
