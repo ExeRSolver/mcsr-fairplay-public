@@ -11,12 +11,6 @@ import java.util.Objects;
 import java.util.zip.ZipOutputStream;
 
 public class OutputUtils {
-    private static String worldName = null;
-
-    public static void resetFileWriter() {
-        if (worldName != null)
-            setFileWriter(worldName);
-    }
 
     public static void setFileWriter(String worldName) {
         try {
@@ -31,7 +25,6 @@ public class OutputUtils {
             ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(logFile));
             BufferedCryptoZipWriter fileWriter = new BufferedCryptoZipWriter(new CryptoZipWriter(outputStream, logFileName, hashFileName));
             InputListener.setFileWriter(fileWriter);
-            OutputUtils.worldName = worldName;
         } catch (IOException e) {
             MCSRFairplay.LOGGER.error(e.getMessage(), e);
         }
