@@ -1,7 +1,7 @@
 package exersolver.mcsrfairplaypublic.output;
 
 import exersolver.mcsrfairplaypublic.InputListener;
-import exersolver.mcsrfairplaypublic.MCSRFairplay;
+import exersolver.mcsrfairplaypublic.MCSRFairplayPublic;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;
@@ -26,7 +26,7 @@ public class OutputUtils {
             BufferedCryptoZipWriter fileWriter = new BufferedCryptoZipWriter(new CryptoZipWriter(outputStream, logFileName, hashFileName));
             InputListener.setFileWriter(fileWriter);
         } catch (IOException e) {
-            MCSRFairplay.LOGGER.error(e.getMessage(), e);
+            MCSRFairplayPublic.LOGGER.error(e.getMessage(), e);
         }
     }
 

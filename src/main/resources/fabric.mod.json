@@ -17,7 +17,7 @@
 	"environment": "client",
 	"entrypoints": {
 		"client": [
-			"exersolver.mcsrfairplaypublic.MCSRFairplay"
+          "exersolver.mcsrfairplaypublic.MCSRFairplayPublic"
 		]
 	},
 	"mixins": [

@@ -1,6 +1,6 @@
 package exersolver.mcsrfairplaypublic.output;
 
-import exersolver.mcsrfairplaypublic.MCSRFairplay;
+import exersolver.mcsrfairplaypublic.MCSRFairplayPublic;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class BufferedCryptoZipWriter extends BufferedWriter {
             this.write(message + "\n");
         }
         catch (IOException e) {
-            MCSRFairplay.LOGGER.error(String.format("Error occurred when logging \"%s\"", message), e);
+            MCSRFairplayPublic.LOGGER.error(String.format("Error occurred when logging \"%s\"", message), e);
         }
     }
 

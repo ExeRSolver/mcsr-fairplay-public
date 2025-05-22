@@ -34,16 +34,16 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
             try {
                 fileWriter.close();
             } catch (IOException e) {
-                MCSRFairplay.LOGGER.error(e.getMessage(), e);
+                MCSRFairplayPublic.LOGGER.error(e.getMessage(), e);
             }
         }
         fileWriter = fileWriterIn;
 
         String modVersion = "";
-        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MCSRFairplay.MOD_ID);
+        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(MCSRFairplayPublic.MOD_ID);
         if (modContainer.isPresent())
             modVersion = "-" + modContainer.get().getMetadata().getVersion().getFriendlyString();
-        fileWriter.log(System.nanoTime(), "Created log file for " + MCSRFairplay.MOD_ID + modVersion);
+        fileWriter.log(System.nanoTime(), "Created log file for " + MCSRFairplayPublic.MOD_ID + modVersion);
 
         modContainer = FabricLoader.getInstance().getModContainer("minecraft");
         modContainer.ifPresent(container -> fileWriter.log("Minecraft version: " + container.getMetadata().getVersion().getFriendlyString()));
@@ -81,7 +81,7 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException e) {
-            MCSRFairplay.LOGGER.error(e.getMessage(), e);
+            MCSRFairplayPublic.LOGGER.error(e.getMessage(), e);
         }
 
         GlobalScreen.addNativeMouseMotionListener(new InputListener());
@@ -97,9 +97,9 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
         try {
             fileWriter.close();
             String hash = fileWriter.getHashHex();
-            MCSRFairplay.LOGGER.info(fileWriter.getHashFileName() + ": " + hash);
+            MCSRFairplayPublic.LOGGER.info(fileWriter.getHashFileName() + ": " + hash);
         } catch (IOException e) {
-            MCSRFairplay.LOGGER.error(e.getMessage(), e);
+            MCSRFairplayPublic.LOGGER.error(e.getMessage(), e);
         }
     }
 
