@@ -103,10 +103,6 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
         }
     }
 
-    public static BufferedCryptoZipWriter getFileWriter() {
-        return fileWriter;
-    }
-
     public static void onFocusChanged(boolean focused) {
         long time = System.nanoTime();
         if (fileWriter == null)
