@@ -10,12 +10,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Window.class)
 public class WindowMixin {
 
-    @Inject(at = @At("HEAD"), method = "onWindowPosChanged")
+    @Inject(
+            method = "onWindowPosChanged",
+            at = @At("HEAD")
+    )
     private void onWindowPosChanged(long window, int x, int y, CallbackInfo ci) {
         InputListener.onWindowPosChanged(x, y);
     }
 
-    @Inject(at = @At("HEAD"), method = "onWindowSizeChanged")
+    @Inject(
+            method = "onWindowSizeChanged",
+            at = @At("HEAD")
+    )
     private void onWindowSizeChanged(long window, int width, int height, CallbackInfo ci) {
         InputListener.onWindowSizeChanged(width, height);
     }

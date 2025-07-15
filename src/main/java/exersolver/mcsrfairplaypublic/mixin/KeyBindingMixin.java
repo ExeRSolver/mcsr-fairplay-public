@@ -11,9 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(KeyBinding.class)
 public abstract class KeyBindingMixin {
-    @Shadow public abstract String getTranslationKey();
 
-    @Inject(at = @At("HEAD"), method = "setBoundKey")
+    @Shadow
+    public abstract String getTranslationKey();
+
+    @Inject(
+            method = "setBoundKey",
+            at = @At("HEAD")
+    )
     private void onKeyBindingChanged(InputUtil.Key boundKey, CallbackInfo ci) {
         InputListener.onKeyBindingChanged(this.getTranslationKey(), boundKey);
     }

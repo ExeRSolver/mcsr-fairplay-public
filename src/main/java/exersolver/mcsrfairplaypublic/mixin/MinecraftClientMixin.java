@@ -21,33 +21,47 @@ public abstract class MinecraftClientMixin {
 	@Nullable
 	public ClientWorld world;
 
-	@Inject(at = @At("HEAD"), method = "method_29607")
+	@Inject(
+			method = "method_29607",
+			at = @At("HEAD")
+	)
 	public void onCreate(String worldName, LevelInfo levelInfo, RegistryTracker.Modifiable registryTracker, GeneratorOptions generatorOptions, CallbackInfo ci) {
 		if (MinecraftClient.getInstance().isOnThread())
 			OutputUtils.setFileWriter(worldName);
     }
 
-	@Inject(at = @At("HEAD"), method = "startIntegratedServer(Ljava/lang/String;)V")
+	@Inject(
+			method = "startIntegratedServer(Ljava/lang/String;)V",
+			at = @At("HEAD")
+	)
 	public void onWorldOpen(String worldName, CallbackInfo ci) {
 		OutputUtils.setFileWriter(worldName);
 	}
 
-	@Inject(at = @At("HEAD"), method = "onWindowFocusChanged(Z)V")
+	@Inject(
+			method = "onWindowFocusChanged(Z)V",
+			at = @At("HEAD")
+	)
 	private void onFocusChanged(boolean focused, CallbackInfo info) {
 		InputListener.onFocusChanged(focused);
 	}
 
-	@Inject(at = @At("HEAD"), method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V")
+	@Inject(
+			method = "disconnect(Lnet/minecraft/client/gui/screen/Screen;)V",
+			at = @At("HEAD")
+	)
 	public void disconnect(CallbackInfo ci) {
 		if (this.world != null)
 			InputListener.closeFileWriter();
 	}
 
 	@Inject(
-			at = @At(value = "FIELD",
+			method = "openScreen",
+			at = @At(
+					value = "FIELD",
 					target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;",
-					opcode = org.objectweb.asm.Opcodes.PUTFIELD),
-			method = "openScreen"
+					opcode = org.objectweb.asm.Opcodes.PUTFIELD
+			)
 	)
 	private void onScreenChanged(Screen screen, CallbackInfo ci) {
 		InputListener.onScreenChanged(screen);
