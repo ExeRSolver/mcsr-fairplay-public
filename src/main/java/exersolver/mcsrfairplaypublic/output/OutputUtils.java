@@ -2,7 +2,6 @@ package exersolver.mcsrfairplaypublic.output;
 
 import exersolver.mcsrfairplaypublic.InputListener;
 import exersolver.mcsrfairplaypublic.MCSRFairplayPublic;
-import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +12,9 @@ import java.util.zip.ZipOutputStream;
 
 public class OutputUtils {
 
-    public static void setFileWriter(String worldName) {
+    public static void setFileWriter(Path worldPath) {
         try {
-            Path logDirectory = FabricLoader.getInstance().getGameDir().resolve("saves").resolve(worldName).resolve("mcsrfairplay").resolve("input-logs");
+            Path logDirectory = worldPath.resolve("mcsrfairplay").resolve("input-logs");
             Files.createDirectories(logDirectory);
 
             int logNum = getLogCount(logDirectory.toFile()) + 1;

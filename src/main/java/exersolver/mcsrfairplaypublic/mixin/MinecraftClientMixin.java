@@ -1,13 +1,9 @@
 package exersolver.mcsrfairplaypublic.mixin;
 
 import exersolver.mcsrfairplaypublic.InputListener;
-import exersolver.mcsrfairplaypublic.output.OutputUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.registry.RegistryTracker;
-import net.minecraft.world.gen.GeneratorOptions;
-import net.minecraft.world.level.LevelInfo;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,23 +16,6 @@ public abstract class MinecraftClientMixin {
 	@Shadow
 	@Nullable
 	public ClientWorld world;
-
-	@Inject(
-			method = "method_29607",
-			at = @At("HEAD")
-	)
-	public void onCreate(String worldName, LevelInfo levelInfo, RegistryTracker.Modifiable registryTracker, GeneratorOptions generatorOptions, CallbackInfo ci) {
-		if (MinecraftClient.getInstance().isOnThread())
-			OutputUtils.setFileWriter(worldName);
-    }
-
-	@Inject(
-			method = "startIntegratedServer(Ljava/lang/String;)V",
-			at = @At("HEAD")
-	)
-	public void onWorldOpen(String worldName, CallbackInfo ci) {
-		OutputUtils.setFileWriter(worldName);
-	}
 
 	@Inject(
 			method = "onWindowFocusChanged(Z)V",
