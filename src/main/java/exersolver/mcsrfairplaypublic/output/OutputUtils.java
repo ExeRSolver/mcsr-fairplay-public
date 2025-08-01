@@ -13,6 +13,9 @@ import java.util.zip.ZipOutputStream;
 public class OutputUtils {
 
     public static void setFileWriter(Path worldPath) {
+        if (System.getProperty("os.name").toLowerCase().startsWith("mac"))
+            return;
+
         try {
             Path logDirectory = worldPath.resolve("mcsrfairplay").resolve("input-logs");
             Files.createDirectories(logDirectory);
