@@ -7,13 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.zip.ZipOutputStream;
 
 public class OutputUtils {
 
     public static void setFileWriter(Path worldPath) {
-        if (System.getProperty("os.name").toLowerCase().startsWith("mac"))
+        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).startsWith("mac"))
             return;
 
         try {

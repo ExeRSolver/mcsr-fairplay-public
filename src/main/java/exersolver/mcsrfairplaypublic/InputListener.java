@@ -75,7 +75,7 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
     }
 
     public static void init() {
-        if (System.getProperty("os.name").toLowerCase().startsWith("mac"))
+        if (System.getProperty("os.name").toLowerCase(Locale.ROOT).startsWith("mac"))
             return;
 
         Logger.getLogger(GlobalScreen.class.getPackage().getName()).setUseParentHandlers(false);
