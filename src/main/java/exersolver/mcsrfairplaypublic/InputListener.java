@@ -9,8 +9,11 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseWheelEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseWheelListener;
+import com.sun.jna.Native;
 import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinReg;
+import com.sun.jna.platform.win32.WinUser;
 import exersolver.mcsrfairplaypublic.output.BufferedCryptoZipWriter;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -48,7 +51,22 @@ public class InputListener implements NativeMouseInputListener, NativeMouseWheel
         modContainer = FabricLoader.getInstance().getModContainer("minecraft");
         modContainer.ifPresent(container -> fileWriter.log("Minecraft version: " + container.getMetadata().getVersion().getFriendlyString()));
 
-        fileWriter.log("Operating system: " + System.getProperty("os.name").toLowerCase(Locale.ROOT));
+        String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+        fileWriter.log("Operating system: " + os);
+        if (os.contains("windows")) {
+            try {
+                char[] buffer = new char[WinUser.KL_NAMELENGTH];
+                User32.INSTANCE.GetKeyboardLayoutName(buffer);
+                String layoutId = Native.toString(buffer).trim();
+
+                String regPath = "System\\CurrentControlSet\\Control\\Keyboard Layouts\\" + layoutId;
+                String dllName = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, regPath, "Layout File");
+
+                fileWriter.log("keyboardLayout " + dllName);
+            } catch (Exception e) {
+                fileWriter.log("keyboardLayout ERROR");
+            }
+        }
 
         Window window = MinecraftClient.getInstance().getWindow();
         fileWriter.log(String.format("window pos %d %d", window.getX(), window.getY()));
